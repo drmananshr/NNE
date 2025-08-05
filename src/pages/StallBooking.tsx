@@ -140,7 +140,7 @@ const StallBooking = () => {
         >
           <h1 className="text-4xl md:text-5xl font-bold text-red-900 mb-6">Interactive Stall Booking</h1>
           <p className="text-xl text-red-700 max-w-3xl mx-auto">
-            Choose your perfect location using our interactive floor plans
+            Choose your perfect location using our floor plans
           </p>
           <div className="mt-6 inline-flex items-center space-x-2 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full">
             <Store className="h-5 w-5" />
@@ -235,7 +235,7 @@ const StallBooking = () => {
         >
           <div className="bg-white rounded-2xl shadow-lg border border-amber-100 p-8">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-red-900 mb-4">Interactive Floor Plans</h2>
+              <h2 className="text-3xl font-bold text-red-900 mb-4">Floor Plans</h2>
               <p className="text-lg text-red-700 mb-6">
                 Explore the venue layout and choose your ideal stall location
               </p>
@@ -292,7 +292,7 @@ const StallBooking = () => {
                         }}
                       />
                       
-                      {/* Interactive Overlay Points */}
+                      {/* Overlay Points */}
                       <div className="absolute inset-0 pointer-events-none">
                         {/* Example interactive points - these would be positioned based on actual stall locations */}
                         <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-purple-500 rounded-full animate-pulse cursor-pointer pointer-events-auto" 
@@ -347,7 +347,7 @@ const StallBooking = () => {
                         }}
                       />
                       
-                      {/* Interactive Overlay Points for Basic Stalls */}
+                      {/* Overlay Points for Basic Stalls */}
                       <div className="absolute inset-0 pointer-events-none">
                         <div className="absolute top-1/4 left-1/5 w-3 h-3 bg-yellow-500 rounded-full animate-pulse cursor-pointer pointer-events-auto" 
                              title="Basic Stall Available"></div>
