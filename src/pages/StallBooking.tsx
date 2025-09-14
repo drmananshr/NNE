@@ -402,12 +402,12 @@ const StallBooking = () => {
         </motion.section>
 
         {/* Stalls Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
           {/* Stalls List */}
-          <div className="lg:col-span-2">
+          <div className="xl:col-span-2">
             <h2 className="text-2xl font-bold text-red-900 mb-6">Available Stalls</h2>
             
-            <div className="space-y-4 max-h-[800px] overflow-y-auto">
+            <div className="space-y-4 max-h-[700px] overflow-y-auto pr-2">
               {filteredStalls.map((stall) => (
                 <motion.div
                   key={stall.id}
@@ -462,9 +462,9 @@ const StallBooking = () => {
           {/* Booking Summary & Form */}
           <div className="space-y-6">
             {selectedStallData && selectedStallData.status === 'Available' ? (
-              <>
+              <div className="space-y-6">
                 {/* Booking Summary */}
-                <div className="bg-white rounded-xl shadow-lg border border-amber-100 p-6 sticky top-24">
+                <div className="bg-white rounded-xl shadow-lg border border-amber-100 p-6">
                   <h3 className="text-xl font-bold text-red-900 mb-4">Booking Summary</h3>
                   
                   <div className="space-y-4 mb-6">
@@ -493,21 +493,23 @@ const StallBooking = () => {
                     
                     <div className="space-y-3">
                       <button className="w-full bg-gradient-to-r from-red-900 to-red-800 text-white py-3 px-6 rounded-lg font-bold hover:from-red-800 hover:to-red-700 transition-all duration-300">
-                        Reserve Now (50%)
+                        Reserve with 50% Payment
                       </button>
                       <button className="w-full bg-green-600 text-white py-2 px-6 rounded-lg font-medium hover:bg-green-700 transition-all duration-300">
                         Pay Full Amount
                       </button>
                     </div>
                     
-                    <p className="text-xs text-red-600 mt-3 text-center">
-                      Reserve with 50% payment. Balance due by 6th January 2026.
-                    </p>
+                    <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                      <p className="text-xs text-blue-800 text-center">
+                        <strong>Payment Terms:</strong> Reserve with 50% payment. Balance due by 6th January 2026.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
                 {/* Contact Form */}
-                <div className="bg-white rounded-xl shadow-lg border border-amber-100 p-6">
+                <div className="bg-white rounded-xl shadow-lg border border-amber-100 p-6 mt-6">
                   <h3 className="text-xl font-bold text-red-900 mb-4">Complete Your Booking</h3>
                   
                   <div className="space-y-4">
@@ -593,8 +595,18 @@ const StallBooking = () => {
                       </div>
                     </div>
                   </div>
+                  
+                  <div className="mt-6 pt-4 border-t border-red-100">
+                    <div className="flex items-center justify-between text-sm text-red-700 mb-4">
+                      <span>Selected Stall:</span>
+                      <span className="font-bold">{selectedStallData.id}</span>
+                    </div>
+                    <button className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 text-red-900 py-3 px-6 rounded-lg font-bold hover:from-yellow-400 hover:to-amber-400 transition-all duration-300 shadow-lg">
+                      Proceed to Payment Gateway
+                    </button>
+                  </div>
                 </div>
-              </>
+              </div>
             ) : (
               <div className="bg-white rounded-xl shadow-lg border border-amber-100 p-8 text-center">
                 <Store className="h-16 w-16 text-red-300 mx-auto mb-4" />
@@ -602,19 +614,114 @@ const StallBooking = () => {
                 <p className="text-red-700">
                   Choose an available stall from the list to see booking details and complete your reservation.
                 </p>
+                
+                <div className="mt-6 p-4 bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg border border-amber-200">
+                  <h4 className="font-bold text-red-900 mb-2">Quick Stats</h4>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-green-700">{filteredStalls.filter(s => s.status === 'Available').length}</div>
+                      <div className="text-red-600">Available</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-red-700">{filteredStalls.filter(s => s.status !== 'Available').length}</div>
+                      <div className="text-red-600">Occupied</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
         </div>
 
         {/* Help Section */}
-        <motion.div 
+        <motion.section 
           className="mt-12 bg-gradient-to-br from-red-50 to-amber-50 rounded-xl border border-red-100 p-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <div className="text-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="text-center md:text-left">
+              <h3 className="text-2xl font-bold text-red-900 mb-4">Need Help Choosing?</h3>
+              <p className="text-red-700 mb-6">
+                Our team is here to help you select the perfect stall for your needs and budget.
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center justify-center md:justify-start space-x-2 text-red-800">
+                  <Info className="h-5 w-5" />
+                  <span>stalls@nne2026.com</span>
+                </div>
+                <div className="flex items-center justify-center md:justify-start space-x-2 text-red-800">
+                  <Info className="h-5 w-5" />
+                  <span>+91-XX-XXXX-XXXX</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-lg p-6 border border-red-200">
+              <h4 className="font-bold text-red-900 mb-4">Booking Guidelines</h4>
+              <ul className="space-y-2 text-sm text-red-700">
+                <li className="flex items-start space-x-2">
+                  <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                  <span>50% advance payment secures your stall</span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                  <span>Balance payment due by 6th January 2026</span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                  <span>All prices include GST and basic amenities</span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                  <span>Setup time: 8:00 AM daily</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </motion.section>
+        
+        {/* Additional Information */}
+        <motion.section 
+          className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
+          <div className="bg-white rounded-xl border border-amber-100 p-6 text-center">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <Store className="h-6 w-6 text-white" />
+            </div>
+            <h3 className="font-bold text-red-900 mb-2">AC Stalls</h3>
+            <p className="text-sm text-red-700 mb-2">Climate controlled comfort</p>
+            <div className="text-lg font-bold text-blue-600">₹13,000 - ₹39,500</div>
+          </div>
+          
+          <div className="bg-white rounded-xl border border-amber-100 p-6 text-center">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <Users className="h-6 w-6 text-white" />
+            </div>
+            <h3 className="font-bold text-red-900 mb-2">Non-AC Stalls</h3>
+            <p className="text-sm text-red-700 mb-2">Cost-effective options</p>
+            <div className="text-lg font-bold text-green-600">₹12,000 - ₹25,000</div>
+          </div>
+          
+          <div className="bg-white rounded-xl border border-amber-100 p-6 text-center">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <Star className="h-6 w-6 text-white" />
+            </div>
+            <h3 className="font-bold text-red-900 mb-2">Prime Locations</h3>
+            <p className="text-sm text-red-700 mb-2">High visibility spots</p>
+            <div className="text-lg font-bold text-purple-600">Premium Pricing</div>
+          </div>
+        </motion.section>
+      </div>
+    </div>
+  );
+};
+
+export default StallBooking;
             <h3 className="text-2xl font-bold text-red-900 mb-4">Need Help Choosing?</h3>
             <p className="text-red-700 mb-6">
               Our team is here to help you select the perfect stall for your needs and budget.
