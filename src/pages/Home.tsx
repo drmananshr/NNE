@@ -113,7 +113,7 @@ const Home = () => {
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-amber-500/20 rounded-2xl blur-xl transform rotate-3"></div>
                 <motion.img
-                  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0zNIf3vsPpgNcL0-R_UZ9j0km_gy_puDF2nuO7hOn7K_zM-vIpLT719wSo1rMRM13vu7BHG9Y1fSV-DyQq0gJefykAxZUPP5t0jinWJjVuLKIls6APDxLOlvNIIwvsJAKn7lByswanMPGrMFLawSPTnu6Vye_PaIwBiRqm9kQ0foly2rRslRDYFqmenA/s1600/16th%20NNE%202025.jpg"
+                  src="/NNE 17 youtube promotion Thumbnail.jpg"
                   alt="17th National Numismatic Exhibition Poster"
                   className="relative w-full max-w-md h-auto rounded-2xl shadow-2xl border-4 border-yellow-400/30 transform hover:scale-105 transition-all duration-300 cursor-pointer"
                   onClick={() => setIsPosterOpen(true)}
@@ -145,7 +145,7 @@ const Home = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0zNIf3vsPpgNcL0-R_UZ9j0km_gy_puDF2nuO7hOn7K_zM-vIpLT719wSo1rMRM13vu7BHG9Y1fSV-DyQq0gJefykAxZUPP5t0jinWJjVuLKIls6APDxLOlvNIIwvsJAKn7lByswanMPGrMFLawSPTnu6Vye_PaIwBiRqm9kQ0foly2rRslRDYFqmenA/s1600/16th%20NNE%202025.jpg"
+                src="/NNE 17 youtube promotion Thumbnail.jpg"
                 alt="17th National Numismatic Exhibition Poster - Full Size"
                 className="w-full h-full object-contain"
               />
