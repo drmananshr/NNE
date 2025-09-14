@@ -628,11 +628,11 @@ const StallBooking = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex items-center space-x-2">
                   <Phone className="h-4 w-4 text-blue-600" />
-                  <span className="text-red-800">+91-XX-XXXX-XXXX</span>
+                  <span className="text-red-800">+91-9243145999</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Mail className="h-4 w-4 text-blue-600" />
-                  <span className="text-red-800">stalls@nne2026.com</span>
+                  <span className="text-red-800">rm@marudhararts.com</span>
                 </div>
               </div>
             </motion.div>
