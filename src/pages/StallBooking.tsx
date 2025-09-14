@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useStalls } from '../hooks/useStalls';
 import { 
   Calendar, 
   Clock, 
@@ -20,6 +21,7 @@ import {
 } from 'lucide-react';
 
 const StallBooking = () => {
+  const { stalls: stallsData, loading: stallsLoading, error: stallsError } = useStalls();
   const [selectedStalls, setSelectedStalls] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [floorFilter, setFloorFilter] = useState('all');
@@ -37,105 +39,9 @@ const StallBooking = () => {
     specialRequirements: ''
   });
 
-  // Real stall data from the provided table
-  const stallsData = [
-    { id: 'AC Prime 1', inclusion: '5 Tables (1Table 5 feet Length & 4 Tables 4 Feet Length) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 39500, dealer: 'Anuj Mahendroo', city: 'New Delhi', state: 'Delhi', country: 'India', status: 'Reserved', category: 'AC Prime' },
-    { id: 'AC Prime 2', inclusion: '3 Tables (5 feet Length) + 3 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 39000, dealer: 'Girish J Veera', city: 'Mumbai', state: 'Maharashtra', country: 'India', status: 'Booked', category: 'AC Prime' },
-    { id: 'AC-01', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 26000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-02', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 23500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-03', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 23500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-04', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 23500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-05', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 26000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-06', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 23500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-07', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 23500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-08', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 26000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-09', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 21500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-10', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-11', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17700, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-12', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17700, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-13', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17700, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-14', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17700, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-15', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17700, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-16', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 21500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-17', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 21000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-18', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-19', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-20', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-21', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-22', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-23', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-24', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 21000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-25', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 19000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-26', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-27', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-28', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-29', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-30', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-31', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-32', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 19000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-33', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17700, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-34', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 14750, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-35', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 14750, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-36', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 14750, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-37', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 14750, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-38', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 14750, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-39', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 14750, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-40', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17700, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-41', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-42', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-43', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-44', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-45', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-46', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-47', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-48', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17700, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-49', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-50', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-51', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-52', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-53', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-54', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-55', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-56', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-57', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-58', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-59', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-60', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-61', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-62', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-63', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-64', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 14500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-65', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17700, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-66', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17700, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-67', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 19000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-68', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 19000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-69', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 22800, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-70', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 23800, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-71', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 23800, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-72', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 22800, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-73', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 20800, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-74', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 20800, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-75', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 19500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-76', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 19500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-77', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 18500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'AC-78', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 18500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'AC Standard' },
-    { id: 'Non AC - A', inclusion: '3 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 25000, dealer: 'Marudhar Arts', city: 'Bangalore', state: 'Karnataka', country: 'India', status: 'Reserved', category: 'Non-AC' },
-    { id: 'Non AC - B', inclusion: '3 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'Non-AC' },
-    { id: 'Non AC - C', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'Non-AC' },
-    { id: 'Non AC - D', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 14000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'Non-AC' },
-    { id: 'Non AC - E', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 14500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'Non-AC' },
-    { id: 'Non AC - F', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 15500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'Non-AC' },
-    { id: 'Non AC - G', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 12000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'Non-AC' },
-    { id: 'Non AC - H', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 13500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'Non-AC' },
-    { id: 'Non AC - I', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 12000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'Non-AC' },
-    { id: 'Non AC - J', inclusion: '3 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 16000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'Non-AC' },
-    { id: 'Non AC - K', inclusion: '3 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 17500, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'Non-AC' },
-    { id: 'Non AC - L', inclusion: '2 Tables (L Shaped) + 2 Chair + Lunch for 2 Person + 2 Water Bottle Per Day', rent: 25000, dealer: '', city: '', state: '', country: '', status: 'Available', category: 'Non-AC' }
-  ];
-
   // Filter stalls based on search and filters
   const filteredStalls = stallsData.filter(stall => {
-    const matchesSearch = stall.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const matchesSearch = stall.stallId.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          stall.category.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesFloor = floorFilter === 'all' || 
@@ -153,7 +59,7 @@ const StallBooking = () => {
   });
 
   const handleStallSelect = (stallId: string) => {
-    const stall = stallsData.find(s => s.id === stallId);
+    const stall = stallsData.find(s => s.stallId === stallId);
     if (stall?.status !== 'Available') return;
     
     setSelectedStalls(prev => 
@@ -165,7 +71,7 @@ const StallBooking = () => {
 
   const calculateTotal = () => {
     return selectedStalls.reduce((total, stallId) => {
-      const stall = stallsData.find(s => s.id === stallId);
+      const stall = stallsData.find(s => s.stallId === stallId);
       return total + (stall?.rent || 0);
     }, 0);
   };
@@ -376,8 +282,24 @@ const StallBooking = () => {
           )}
         </AnimatePresence>
 
+        {/* Loading State */}
+        {stallsLoading && (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-red-900"></div>
+            <p className="mt-2 text-red-700">Loading stalls...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {stallsError && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-8">
+            <p className="text-red-800">Error loading stalls: {stallsError}</p>
+          </div>
+        )}
+
         {/* Search and Filters */}
-        <motion.section 
+        {!stallsLoading && !stallsError && (
+          <motion.section 
           className="mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -447,23 +369,25 @@ const StallBooking = () => {
             </div>
           </div>
         </motion.section>
+        )}
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+        {!stallsLoading && !stallsError && (
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
           {/* Stalls List */}
           <div className="xl:col-span-2 space-y-4">
             <h2 className="text-2xl font-bold text-red-900 mb-6">Available Stalls</h2>
             
             {filteredStalls.map((stall) => (
               <motion.div
-                key={stall.id}
+                key={stall.stallId}
                 className={`bg-white rounded-xl border-2 p-6 transition-all duration-300 cursor-pointer ${
-                  selectedStalls.includes(stall.id)
+                  selectedStalls.includes(stall.stallId)
                     ? 'border-yellow-400 shadow-lg'
                     : stall.status === 'Available'
                     ? 'border-amber-100 hover:border-yellow-300 hover:shadow-md'
                     : 'border-gray-200 opacity-75 cursor-not-allowed'
                 }`}
-                onClick={() => handleStallSelect(stall.id)}
+                onClick={() => handleStallSelect(stall.stallId)}
                 whileHover={stall.status === 'Available' ? { scale: 1.02, y: -2 } : {}}
                 variants={fadeInUp}
                 initial="initial"
@@ -472,7 +396,7 @@ const StallBooking = () => {
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="text-xl font-bold text-red-900">{stall.id}</h3>
+                      <h3 className="text-xl font-bold text-red-900">{stall.stallId}</h3>
                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(stall.category)}`}>
                         {stall.category}
                       </span>
@@ -500,13 +424,13 @@ const StallBooking = () => {
                 {stall.status === 'Available' && (
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      {selectedStalls.includes(stall.id) ? (
+                      {selectedStalls.includes(stall.stallId) ? (
                         <CheckCircle className="h-5 w-5 text-green-600" />
                       ) : (
                         <div className="w-5 h-5 border-2 border-red-300 rounded-full"></div>
                       )}
                       <span className="text-red-800 font-medium">
-                        {selectedStalls.includes(stall.id) ? 'Selected' : 'Click to select'}
+                        {selectedStalls.includes(stall.stallId) ? 'Selected' : 'Click to select'}
                       </span>
                     </div>
                   </div>
@@ -532,12 +456,12 @@ const StallBooking = () => {
                 <>
                   <div className="space-y-3 mb-4">
                     {selectedStalls.map((stallId) => {
-                      const stall = stallsData.find(s => s.id === stallId);
+                      const stall = stallsData.find(s => s.stallId === stallId);
                       if (!stall) return null;
                       return (
                         <div key={stallId} className="flex justify-between items-center">
                           <div>
-                            <div className="font-medium text-red-900">{stall.id}</div>
+                            <div className="font-medium text-red-900">{stall.stallId}</div>
                             <div className="text-sm text-red-600">{stall.category}</div>
                           </div>
                           <div className="font-bold text-red-900">
@@ -723,6 +647,7 @@ const StallBooking = () => {
             </motion.div>
           </div>
         </div>
+        )}
       </div>
     </div>
   );

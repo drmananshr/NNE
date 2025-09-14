@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTickets } from '../hooks/useTickets';
 import { Calendar, Clock, MapPin, Users, CreditCard, CheckCircle } from 'lucide-react';
 
 const TicketBooking = () => {
+  const { ticketTypes, loading: ticketsLoading, error: ticketsError } = useTickets();
   const [selectedTickets, setSelectedTickets] = useState({
     single: 0,
     threeDay: 0,
@@ -18,41 +20,10 @@ const TicketBooking = () => {
     specialRequirements: ''
   });
 
-  const ticketTypes = [
-    {
-      id: 'single',
-      name: 'Single Day Pass',
-      price: 500,
-      description: 'Access to all exhibitions and sessions for one day',
-      features: ['Exhibition access', 'Dealer stalls', 'Academic sessions', 'Networking events']
-    },
-    {
-      id: 'threeDay',
-      name: 'Three Day Pass',
-      price: 1200,
-      description: 'Complete access to all three days including special events',
-      features: ['All exhibition days', 'Live auction access', 'NNAP Awards ceremony', 'Exclusive preview sessions', 'Welcome & farewell events'],
-      popular: true
-    },
-    {
-      id: 'student',
-      name: 'Student Pass',
-      price: 300,
-      description: 'Discounted rate for students with valid ID',
-      features: ['Exhibition access (3 days)', 'Academic sessions', 'Student networking events', 'Valid student ID required']
-    },
-    {
-      id: 'family',
-      name: 'Family Pack (4 people)',
-      price: 3500,
-      description: 'Best value for families - includes 4 three-day passes',
-      features: ['4 × Three day passes', 'Family seating area', 'Special family activities', 'Children under 12 free']
-    }
-  ];
 
   const calculateTotal = () => {
     return ticketTypes.reduce((total, ticket) => {
-      return total + (selectedTickets[ticket.id] * ticket.price);
+      return total + (selectedTickets[ticket.ticketId] * ticket.price);
     }, 0);
   };
 
@@ -118,7 +89,23 @@ const TicketBooking = () => {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Loading State */}
+        {ticketsLoading && (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-red-900"></div>
+            <p className="mt-2 text-red-700">Loading ticket types...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {ticketsError && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-8">
+            <p className="text-red-800">Error loading tickets: {ticketsError}</p>
+          </div>
+        )}
+
+        {!ticketsLoading && !ticketsError && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Ticket Selection */}
           <div className="lg:col-span-2 space-y-6">
             <h2 className="text-2xl font-bold text-red-900 mb-6">Select Tickets</h2>
@@ -130,16 +117,16 @@ const TicketBooking = () => {
             >
             {ticketTypes.map((ticket) => (
               <motion.div
-                key={ticket.id}
+                key={ticket.ticketId}
                 className={`bg-white rounded-xl border-2 p-6 transition-all duration-300 ${
-                  ticket.popular
+                  ticket.isPopular
                     ? 'border-yellow-400 shadow-lg'
                     : 'border-amber-100 hover:border-yellow-300'
                 }`}
                 variants={fadeInUp}
                 whileHover={{ scale: 1.02, y: -5 }}
               >
-                {ticket.popular && (
+                {ticket.isPopular && (
                   <div className="inline-block bg-yellow-500 text-red-900 px-3 py-1 rounded-full text-sm font-bold mb-4">
                     Most Popular
                   </div>
@@ -168,24 +155,24 @@ const TicketBooking = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <button
-                      onClick={() => handleTicketChange(ticket.id, -1)}
+                      onClick={() => handleTicketChange(ticket.ticketId, -1)}
                       className="w-10 h-10 bg-red-100 text-red-800 rounded-full hover:bg-red-200 transition-colors"
-                      disabled={selectedTickets[ticket.id] === 0}
+                      disabled={selectedTickets[ticket.ticketId] === 0}
                     >
                       -
                     </button>
                     <span className="text-lg font-bold text-red-900 min-w-[2rem] text-center">
-                      {selectedTickets[ticket.id]}
+                      {selectedTickets[ticket.ticketId]}
                     </span>
                     <button
-                      onClick={() => handleTicketChange(ticket.id, 1)}
+                      onClick={() => handleTicketChange(ticket.ticketId, 1)}
                       className="w-10 h-10 bg-red-900 text-white rounded-full hover:bg-red-800 transition-colors"
                     >
                       +
                     </button>
                   </div>
                   <div className="text-lg font-bold text-red-900">
-                    ₹{(selectedTickets[ticket.id] * ticket.price).toLocaleString()}
+                    ₹{(selectedTickets[ticket.ticketId] * ticket.price).toLocaleString()}
                   </div>
                 </div>
               </motion.div>
@@ -209,17 +196,17 @@ const TicketBooking = () => {
                 <>
                   <div className="space-y-3 mb-4">
                     {ticketTypes.map((ticket) => {
-                      if (selectedTickets[ticket.id] > 0) {
+                      if (selectedTickets[ticket.ticketId] > 0) {
                         return (
-                          <div key={ticket.id} className="flex justify-between items-center">
+                          <div key={ticket.ticketId} className="flex justify-between items-center">
                             <div>
                               <div className="font-medium text-red-900">{ticket.name}</div>
                               <div className="text-sm text-red-600">
-                                {selectedTickets[ticket.id]} × ₹{ticket.price.toLocaleString()}
+                                {selectedTickets[ticket.ticketId]} × ₹{ticket.price.toLocaleString()}
                               </div>
                             </div>
                             <div className="font-bold text-red-900">
-                              ₹{(selectedTickets[ticket.id] * ticket.price).toLocaleString()}
+                              ₹{(selectedTickets[ticket.ticketId] * ticket.price).toLocaleString()}
                             </div>
                           </div>
                         );
@@ -326,6 +313,7 @@ const TicketBooking = () => {
             )}
           </div>
         </div>
+        )}
       </div>
     </div>
   );
