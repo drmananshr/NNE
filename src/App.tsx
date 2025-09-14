@@ -12,8 +12,14 @@ import AcademicSessions from './pages/AcademicSessions';
 import Contact from './pages/Contact';
 import TermsAndConditions from './pages/TermsAndConditions';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import { initializeAllData } from './utils/initializeData';
 
 function App() {
+  React.useEffect(() => {
+    // Initialize database data on app start
+    initializeAllData().catch(console.error);
+  }, []);
+
   return (
     <Router>
       <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50">

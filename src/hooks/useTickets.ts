@@ -62,14 +62,30 @@ export const useTickets = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Simulate loading delay
-    const timer = setTimeout(() => {
-      setTickets(staticTicketData);
-      setLoading(false);
-    }, 500);
+    const loadTickets = async () => {
+      try {
+        // Try to load from database service
+        const { getAllTicketTypes } = await import('../services/ticketService');
+        const ticketsData = await getAllTicketTypes();
+        
+        if (ticketsData.length > 0) {
+          setTickets(ticketsData);
+        } else {
+          // Fallback to static data if database is empty
+          setTickets(staticTicketData);
+        }
+      } catch (error) {
+        console.error('Error loading tickets:', error);
+        setError('Failed to load tickets data');
+        // Fallback to static data on error
+        setTickets(staticTicketData);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return () => clearTimeout(timer);
+    loadTickets();
   }, []);
 
-  return { tickets, loading, error };
+  return { ticketTypes: tickets, loading, error };
 };
