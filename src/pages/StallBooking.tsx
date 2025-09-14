@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Calendar, 
   Clock, 
@@ -26,6 +26,7 @@ const StallBooking = () => {
   const [priceFilter, setPriceFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('available');
   const [showFloorPlan, setShowFloorPlan] = useState(false);
+  const [expandedImage, setExpandedImage] = useState<string | null>(null);
   
   const [formData, setFormData] = useState({
     companyName: '',
@@ -288,8 +289,92 @@ const StallBooking = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <div>
                     <h3 className="text-lg font-bold text-red-900 mb-4">AC Hall Floor Plan</h3>
-                    <img
-                      src="https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=800"
+                    <div 
+                      className="relative cursor-pointer group"
+                      onClick={() => setExpandedImage('ac')}
+                    >
+                      <img
+                        src="https://collectndealdevcdn.marucoins.in/uploads/event/23-108527.jpg"
+                        alt="AC Hall Floor Plan"
+                        className="w-full h-64 object-contain rounded-lg border border-red-200 group-hover:shadow-lg transition-all duration-300"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <div className="opacity-0 group-hover:opacity-100 bg-white/90 px-3 py-1 rounded-full text-sm font-medium text-red-900 transition-opacity duration-300">
+                          Click to expand
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-red-900 mb-4">Non-AC Hall Floor Plan</h3>
+                    <div 
+                      className="relative cursor-pointer group"
+                      onClick={() => setExpandedImage('non-ac')}
+                    >
+                      <img
+                        src="https://collectndealdevcdn.marucoins.in/uploads/event/23-799475.jpg"
+                        alt="Non-AC Hall Floor Plan"
+                        className="w-full h-64 object-contain rounded-lg border border-red-200 group-hover:shadow-lg transition-all duration-300"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <div className="opacity-0 group-hover:opacity-100 bg-white/90 px-3 py-1 rounded-full text-sm font-medium text-red-900 transition-opacity duration-300">
+                          Click to expand
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </motion.section>
+
+        {/* Floor Plan Modal */}
+        <AnimatePresence>
+          {expandedImage && (
+            <motion.div
+              className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setExpandedImage(null)}
+            >
+              <motion.div
+                className="relative max-w-7xl max-h-[90vh] overflow-hidden rounded-2xl bg-white"
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.5, opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="relative">
+                  <img
+                    src={expandedImage === 'ac' 
+                      ? "https://collectndealdevcdn.marucoins.in/uploads/event/23-108527.jpg"
+                      : "https://collectndealdevcdn.marucoins.in/uploads/event/23-799475.jpg"
+                    }
+                    alt={expandedImage === 'ac' ? "AC Hall Floor Plan - Full Size" : "Non-AC Hall Floor Plan - Full Size"}
+                    className="w-full h-full object-contain max-h-[85vh]"
+                  />
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <h3 className="font-bold text-red-900">
+                      {expandedImage === 'ac' ? 'AC Hall Floor Plan' : 'Non-AC Hall Floor Plan'}
+                    </h3>
+                  </div>
+                  <button
+                    onClick={() => setExpandedImage(null)}
+                    className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors text-xl font-bold"
+                  >
+                    ×
+                  </button>
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <p className="text-sm text-red-700">Click outside to close • Use browser zoom for detailed view</p>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
                       alt="AC Hall Floor Plan"
                       className="w-full h-64 object-cover rounded-lg border border-red-200"
                     />
