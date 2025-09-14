@@ -170,8 +170,8 @@ const TermsAndConditions = () => {
               If you have any questions about these Terms & Conditions, please contact us:
             </p>
             <div className="space-y-1 text-red-800">
-              <p><strong>Email:</strong> legal@nne2026.com</p>
-              <p><strong>Phone:</strong> +91-XX-XXXX-XXXX</p>
+              <p><strong>Email:</strong> rm@marudhararts.com</p>
+              <p><strong>Phone:</strong> +91-9243145999</p>
               <p><strong>Address:</strong> Marudhar Arts, Bengaluru</p>
             </div>
           </section>

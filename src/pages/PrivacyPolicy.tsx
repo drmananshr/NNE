@@ -244,9 +244,9 @@ const PrivacyPolicy = () => {
               If you have questions about this Privacy Policy or our data practices, please contact us:
             </p>
             <div className="space-y-1 text-red-800">
-              <p><strong>Privacy Officer:</strong> privacy@nne2026.com</p>
-              <p><strong>General Contact:</strong> info@nne2026.com</p>
-              <p><strong>Phone:</strong> +91-XX-XXXX-XXXX</p>
+              <p><strong>Privacy Officer:</strong> rm@marudhararts.com</p>
+              <p><strong>General Contact:</strong> rm@marudhararts.com</p>
+              <p><strong>Phone:</strong> +91-9243145999</p>
               <p><strong>Address:</strong> Marudhar Arts, Bengaluru, Karnataka, India</p>
             </div>
           </section>
