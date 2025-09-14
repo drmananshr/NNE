@@ -18,7 +18,6 @@ import {
   AlertCircle,
   Info
 } from 'lucide-react';
-import { AnimatePresence } from 'framer-motion';
 
 const StallBooking = () => {
   const [selectedStalls, setSelectedStalls] = useState<string[]>([]);
