@@ -375,23 +375,6 @@ const StallBooking = () => {
             </motion.div>
           )}
         </AnimatePresence>
-                      alt="AC Hall Floor Plan"
-                      className="w-full h-64 object-cover rounded-lg border border-red-200"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-red-900 mb-4">Non-AC Hall Floor Plan</h3>
-                    <img
-                      src="https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=800"
-                      alt="Non-AC Hall Floor Plan"
-                      className="w-full h-64 object-cover rounded-lg border border-red-200"
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </div>
-        </motion.section>
 
         {/* Search and Filters */}
         <motion.section 
