@@ -355,6 +355,28 @@ const StallBooking = () => {
               {/* Status Filter */}
               <select
                 value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="px-4 py-2 border border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              >
+                <option value="all">All Status</option>
+                <option value="available">Available</option>
+                <option value="booked">Booked</option>
+                <option value="reserved">Reserved</option>
+              </select>
+
+              {/* Clear Filters */}
+              <button
+                onClick={() => {
+                  setSearchTerm('');
+                  setFloorFilter('all');
+                  setPriceFilter('all');
+                  setStatusFilter('available');
+                }}
+                className="px-4 py-2 bg-red-100 text-red-800 rounded-lg hover:bg-red-200 transition-colors"
+              >
+                Clear Filters
+              </button>
+            </div>
           </div>
         </motion.section>
 
