@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   Calendar, 
   Clock, 
@@ -18,6 +18,7 @@ import {
   AlertCircle,
   Info
 } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 
 const StallBooking = () => {
   const [selectedStalls, setSelectedStalls] = useState<string[]>([]);
