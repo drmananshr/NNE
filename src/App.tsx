@@ -1,7 +1,5 @@
 import React from 'react';
-import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { initializeAllData } from './utils/initializeData';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -16,11 +14,6 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
-  useEffect(() => {
-    // Initialize database data on app start
-    initializeAllData();
-  }, []);
-
   return (
     <Router>
       <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50">
