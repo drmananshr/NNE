@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Store, Users, MapPin, Info, Star, CheckCircle, Search, Filter } from 'lucide-react';
+import { Store, Users, MapPin, Info, Star, CheckCircle, Search, Filter, ChevronDown, ChevronUp, Eye } from 'lucide-react';
 
 const StallBooking = () => {
+  const [isFloorPlanOpen, setIsFloorPlanOpen] = useState(false);
   const [selectedStall, setSelectedStall] = useState<string>('');
   const [selectedFloor, setSelectedFloor] = useState<'ac' | 'nonac'>('ac');
   const [searchTerm, setSearchTerm] = useState('');
@@ -284,89 +285,119 @@ const StallBooking = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <div className="bg-white rounded-2xl shadow-lg border border-amber-100 p-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-red-900 mb-4">Floor Plans</h2>
-              <p className="text-lg text-red-700 mb-6">
-                Explore the venue layout and see stall locations
-              </p>
-            </div>
+          <div className="bg-white rounded-2xl shadow-lg border border-amber-100 overflow-hidden">
+            {/* Collapsible Header */}
+            <button
+              onClick={() => setIsFloorPlanOpen(!isFloorPlanOpen)}
+              className="w-full p-6 text-left hover:bg-amber-50 transition-colors duration-200 flex items-center justify-between"
+            >
+              <div>
+                <h2 className="text-2xl font-bold text-red-900 mb-2 flex items-center">
+                  <Eye className="h-6 w-6 mr-2 text-yellow-600" />
+                  Floor Plans
+                </h2>
+                <p className="text-red-700">
+                  {isFloorPlanOpen ? 'Click to hide' : 'Click to view'} venue layout and stall locations
+                </p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-red-600 font-medium">
+                  {isFloorPlanOpen ? 'Hide Plans' : 'View Plans'}
+                </span>
+                {isFloorPlanOpen ? (
+                  <ChevronUp className="h-5 w-5 text-red-600" />
+                ) : (
+                  <ChevronDown className="h-5 w-5 text-red-600" />
+                )}
+              </div>
+            </button>
 
-            <div className="space-y-8">
-              {selectedFloor === 'ac' && (
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-xl border border-amber-200">
-                    <h3 className="text-2xl font-bold text-red-900 mb-4 text-center">AC Stalls Layout</h3>
-                    
-                    <div className="relative">
-                      <img
-                        src="https://marudhararts.com/uploads/nne/17/Floor-plan-17-105303.jpg"
-                        alt="AC Stalls Floor Plan"
-                        className="w-full h-auto rounded-lg shadow-md border border-amber-200"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const parent = target.parentElement;
-                          if (parent) {
-                            parent.innerHTML = '<div class="text-center py-8 text-red-600">Floor plan image temporarily unavailable</div>';
-                          }
-                        }}
-                      />
-                    </div>
-                    
-                    <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-4 h-4 bg-purple-500 rounded"></div>
-                        <span className="text-red-800">AC Prime Stalls (₹39,000+)</span>
+            {/* Collapsible Content */}
+            <motion.div
+              initial={false}
+              animate={{
+                height: isFloorPlanOpen ? 'auto' : 0,
+                opacity: isFloorPlanOpen ? 1 : 0
+              }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="overflow-hidden"
+            >
+              <div className="p-8 pt-0 space-y-8">
+                {selectedFloor === 'ac' && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-xl border border-amber-200">
+                      <h3 className="text-2xl font-bold text-red-900 mb-4 text-center">AC Stalls Layout</h3>
+                      
+                      <div className="relative">
+                        <img
+                          src="https://marudhararts.com/uploads/nne/17/Floor-plan-17-105303.jpg"
+                          alt="AC Stalls Floor Plan"
+                          className="w-full h-auto rounded-lg shadow-md border border-amber-200"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            const parent = target.parentElement;
+                            if (parent) {
+                              parent.innerHTML = '<div class="text-center py-8 text-red-600">Floor plan image temporarily unavailable</div>';
+                            }
+                          }}
+                        />
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-4 h-4 bg-blue-500 rounded"></div>
-                        <span className="text-red-800">AC Standard Stalls (₹13,000 - ₹26,000)</span>
+                      
+                      <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-4 h-4 bg-purple-500 rounded"></div>
+                          <span className="text-red-800">AC Prime Stalls (₹39,000+)</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                          <span className="text-red-800">AC Standard Stalls (₹13,000 - ₹26,000)</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              )}
+                  </motion.div>
+                )}
 
-              {selectedFloor === 'nonac' && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-xl border border-amber-200">
-                    <h3 className="text-2xl font-bold text-red-900 mb-4 text-center">Non-AC Stalls Layout</h3>
-                    
-                    <div className="relative">
-                      <img
-                        src="https://marudhararts.com/uploads/nne/17/FloorPlan-image-17-105303.jpg"
-                        alt="Non-AC Stalls Floor Plan"
-                        className="w-full h-auto rounded-lg shadow-md border border-amber-200"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const parent = target.parentElement;
-                          if (parent) {
-                            parent.innerHTML = '<div class="text-center py-8 text-red-600">Floor plan image temporarily unavailable</div>';
-                          }
-                        }}
-                      />
-                    </div>
-                    
-                    <div className="mt-6 flex justify-center">
-                      <div className="flex items-center space-x-2 text-sm">
-                        <div className="w-4 h-4 bg-green-500 rounded"></div>
-                        <span className="text-red-800">Non-AC Stalls (₹12,000 - ₹25,000)</span>
+                {selectedFloor === 'nonac' && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-xl border border-amber-200">
+                      <h3 className="text-2xl font-bold text-red-900 mb-4 text-center">Non-AC Stalls Layout</h3>
+                      
+                      <div className="relative">
+                        <img
+                          src="https://marudhararts.com/uploads/nne/17/FloorPlan-image-17-105303.jpg"
+                          alt="Non-AC Stalls Floor Plan"
+                          className="w-full h-auto rounded-lg shadow-md border border-amber-200"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            const parent = target.parentElement;
+                            if (parent) {
+                              parent.innerHTML = '<div class="text-center py-8 text-red-600">Floor plan image temporarily unavailable</div>';
+                            }
+                          }}
+                        />
+                      </div>
+                      
+                      <div className="mt-6 flex justify-center">
+                        <div className="flex items-center space-x-2 text-sm">
+                          <div className="w-4 h-4 bg-green-500 rounded"></div>
+                          <span className="text-red-800">Non-AC Stalls (₹12,000 - ₹25,000)</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              )}
-            </div>
+                  </motion.div>
+                )}
+              </div>
+            </motion.div>
           </div>
         </motion.section>
 
