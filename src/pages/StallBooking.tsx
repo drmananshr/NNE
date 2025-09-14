@@ -355,20 +355,6 @@ const StallBooking = () => {
               {/* Status Filter */}
               <select
                 value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-4 py-2 border border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              >
-                <option value="all">All Status</option>
-                <option value="available">Available</option>
-                <option value="booked">Booked</option>
-                <option value="reserved">Reserved</option>
-              </select>
-
-              {/* Results Count */}
-              <div className="flex items-center justify-center bg-red-50 rounded-lg px-4 py-2">
-                <span className="text-red-800 font-medium">{filteredStalls.length} stalls</span>
-              </div>
-            </div>
           </div>
         </motion.section>
 
